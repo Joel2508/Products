@@ -10,6 +10,7 @@
     using System.IO;
     using Herpels;
     using System;
+    using System.Linq;
 
     [Authorize(Users = "joelarias2508@gmail.com")]
     public class ProductsController : Controller
@@ -34,7 +35,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(id);
+            var product = await db.Products.FindAsync(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -45,7 +46,7 @@
         // GET: Products/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description");
+            ViewBag.CategoryId = new SelectList(db.Categories.OrderBy(c=>c.Description), "CategoryId", "Description");
             return View();
         }
 
@@ -71,7 +72,7 @@
 
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", view.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories.OrderBy(c=>c.Description), "CategoryId", "Description", view.CategoryId);
             return View(view);
         }
 
@@ -104,7 +105,7 @@
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", product.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories.OrderBy(c=>c.Description), "CategoryId", "Description", product.CategoryId);
             var view = ToViewProduct(product);
             return View(view);
         }
@@ -146,7 +147,7 @@
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", view.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories.OrderBy(c => c.Description), "CategoryId", "Description", view.CategoryId);
             return View(view);
         }
 

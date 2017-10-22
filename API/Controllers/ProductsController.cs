@@ -9,6 +9,9 @@
     using System.Web.Http.Description;
     using Backend.Context;
     using Backend.Model;
+    using Response;
+    using System.Collections.Generic;
+    using System;
 
     [Authorize]
     public class ProductsController : ApiController
@@ -29,14 +32,13 @@
         [ResponseType(typeof(Product))]
         public async Task<IHttpActionResult> GetProduct(int id)
         {
-            Product product = await db.Products.FindAsync(id);
+            var product = await db.Products.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
-
             return Ok(product);
-        }
+        }       
 
         // PUT: api/Products/5
         [ResponseType(typeof(void))]

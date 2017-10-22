@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Products.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Products
         {
             InitializeComponent();
 
-            MainPage = new Products.MainPage();
+            MainPage = new NavigationPage(new LoginView());
         }
 
         protected override void OnStart()
