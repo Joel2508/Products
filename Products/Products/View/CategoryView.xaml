@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Products.View.CategoryView"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <StackLayout
+            BindingContext="{Binding Category}">
+        <ListView
+                ItemsSource="{Binding Categories}"
+                HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                HorizontalOptions="FillAndExpand"
+                                Text="{Binding Description}">
+                            </Label>
+                            <Image                           
+                                HorizontalOptions="End"
+                                Source="ic_chevron_right.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

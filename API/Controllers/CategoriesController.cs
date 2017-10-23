@@ -7,9 +7,12 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Backend.Context;
 using Backend.Model;
+using System.Collections.Generic;
+using API.Response;
+using System;
 
 namespace API.Controllers
-{
+{    
     [Authorize]
     public class CategoriesController : ApiController
     {
@@ -20,16 +23,46 @@ namespace API.Controllers
             db = new ContextBackend();
         }
         // GET: api/Categories
-        public IQueryable<Category> GetCategories()
+        public async Task<IHttpActionResult> GetCategories()
         {
-            return db.Categories;
+            var categories = await db.Categories.ToListAsync();
+            var categoriesResponse = new List<CategoryResponse>();
+
+            foreach (var category in categories)
+            {
+                var productResponse = new List<ProductResponse>();
+
+                foreach (var item in category.Products)
+                {
+                    productResponse.Add(new ProductResponse
+                    {
+                        Description = item.Description,
+                        Image = item.Image,
+                        IsActive = item.IsActive,
+                        LastPurchase = item.LastPurchase,
+                        Price = item.Price,
+                        ProductId = item.ProductId,
+                        Remarks = item.Remarks,
+                        Sctock = item.Sctock,
+                    });
+
+                    categoriesResponse.Add(new CategoryResponse
+                    {
+                        CategoryId = item.CategoryId,
+                        Description = item.Description,
+                        Products = productResponse,
+                    });
+                }
+            }
+            return Ok(categoriesResponse.OrderBy(c => c.Description));
         }
+
 
         // GET: api/Categories/5
         [ResponseType(typeof(Category))]
         public async Task<IHttpActionResult> GetCategory(int id)
         {
-            Category category = await db.Categories.FindAsync(id);
+            var category = await db.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();

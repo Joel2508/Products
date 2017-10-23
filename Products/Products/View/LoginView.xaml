@@ -14,7 +14,7 @@
                 FontSize="Large"
                 TextColor="Black"
                 HorizontalOptions="Center"
-                Text="Products">
+                Text="Product">
             </Label>
             <StackLayout
                 Orientation="Vertical">
@@ -28,7 +28,7 @@
                         <Label                
                             Grid.Column="0"
                             FontAttributes="Bold"
-                            FontSize="Large"
+                            FontSize="Small"
                             Text="Email:"
                             TextColor="Black">
                         </Label>
@@ -37,7 +37,7 @@
                             BackgroundColor="DodgerBlue"
                             Text="{Binding Email, Mode=TwoWay}"                                    
                             HorizontalOptions="Start"                        
-                            VerticalOptions="StartAndExpand"
+                            VerticalOptions="Center"
                             Keyboard="Email"
                             Placeholder="Enter you email...."
                             TextColor="Black">
@@ -52,7 +52,7 @@
                         <Label                
                             Grid.Column="0"
                             FontAttributes="Bold"
-                            FontSize="Large"
+                            FontSize="Small"
                             Text="Password:"
                             TextColor="Black">
                         </Label>
@@ -61,7 +61,7 @@
                             BackgroundColor="DodgerBlue"                    
                             Text="{Binding Password, Mode=TwoWay}"                                    
                             HorizontalOptions="Start"                        
-                            VerticalOptions="StartAndExpand"
+                            VerticalOptions="Center"
                             IsPassword="True"                            
                             Placeholder="Enter you password...."
                             TextColor="Black">

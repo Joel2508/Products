@@ -1,5 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Plugin.Connectivity;
 using Products.Service;
+using Products.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Products.ViewModel
 {
@@ -17,7 +20,8 @@ namespace Products.ViewModel
         #endregion
 
         #region Service
-        private DialogService dialogService;
+        private DialogService dialogService; 
+        private ApiService apiService;
         #endregion
 
         #region Attribute
@@ -91,7 +95,7 @@ namespace Products.ViewModel
                 }
             }
         }
-        
+
         public bool IsEnabled
         {
             get
@@ -115,13 +119,14 @@ namespace Products.ViewModel
             IsEnabled = true;
             IsToggled = true;
             dialogService = new DialogService();
+            apiService = new ApiService();
         }
         #endregion
 
         #region Command
-        public ICommand LoginCommand { get {return new RelayCommand(Login) ; } }
+        public ICommand LoginCommand { get { return new RelayCommand(Login); } }
 
-        async void Login()
+        private async void Login()
         {
             if (string.IsNullOrEmpty(Email))
             {
@@ -134,6 +139,49 @@ namespace Products.ViewModel
                 await dialogService.ShowMessage("Error", "You must enter an password");
                 return;
             }
+
+            IsRunning = true;
+            IsEnabled = false;
+
+            var connection = await apiService.CheckConnection();
+
+            if (!connection.IsSuccess)
+            {
+                IsRunning = false;
+                IsEnabled = true; 
+                await dialogService.ShowMessage("Error", connection.Message);
+                return;
+            }
+            var response = await apiService.GetToken("http://products.somee.com", 
+                Email, Password);
+            if (response == null)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowMessage("Error", "Not service the internet");
+                Password = null;
+                return;
+            }
+            if (string.IsNullOrEmpty(response.AccessToken))
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowMessage("Error", response.ErrorDescription);
+                Password = null;
+                return;
+            }
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Token = response;
+            mainViewModel.Categories = new CategoryViewModel();
+
+            await  Application.Current.MainPage.Navigation.PushAsync(new CategoryView());            
+
+            Email = null;
+            Password = null;
+
+            IsRunning = false;
+            IsEnabled = true;
         }
         #endregion
     }
