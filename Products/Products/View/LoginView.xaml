@@ -2,19 +2,146 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Products.View.LoginView"
-             BindingContext="{Binding Main, Source={StaticResource Locator} }">
+             BackgroundColor="White"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}">
     <ContentPage.Content>
-        <StackLayout
-            BindingContext="{Binding Login}"
-            Padding="8">
+        <StackLayout            
+            Padding="8"
+            Spacing="16"
+            BindingContext="{Binding Login}">
             <Label
                 FontAttributes="Bold"
                 FontSize="Large"
                 TextColor="Black"
                 HorizontalOptions="Center"
-                Text="Login">
+                Text="Products">
             </Label>
-            
+            <StackLayout
+                Orientation="Vertical">
+                <Grid Padding="8">
+                    <Grid Grid.Row="0"
+                          Margin="50,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label                
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            Text="Email:"
+                            TextColor="Black">
+                        </Label>
+                        <Entry                  
+                            Grid.Column="1"          
+                            BackgroundColor="DodgerBlue"
+                            Text="{Binding Email, Mode=TwoWay}"                                    
+                            HorizontalOptions="Start"                        
+                            VerticalOptions="StartAndExpand"
+                            Keyboard="Email"
+                            Placeholder="Enter you email...."
+                            TextColor="Black">
+                        </Entry>
+                    </Grid>
+                    <Grid Grid.Row="1"
+                          Margin="50,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions >
+                        <Label                
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            Text="Password:"
+                            TextColor="Black">
+                        </Label>
+                        <Entry                  
+                            Grid.Column="1"          
+                            BackgroundColor="DodgerBlue"                    
+                            Text="{Binding Password, Mode=TwoWay}"                                    
+                            HorizontalOptions="Start"                        
+                            VerticalOptions="StartAndExpand"
+                            IsPassword="True"                            
+                            Placeholder="Enter you password...."
+                            TextColor="Black">
+                        </Entry>
+                    </Grid>
+                </Grid>
+                <StackLayout                
+                Orientation="Horizontal"
+                    HorizontalOptions="CenterAndExpand">
+                    <Label
+                        FontAttributes="Bold"
+                        Text="Rememberme"
+                        FontSize="Medium"
+                        TextColor="Black"
+                        HorizontalOptions="Center">
+                    </Label>
+                    <Switch
+                        HorizontalOptions="Center"                        
+                        IsToggled="{Binding IsToggled, Mode=TwoWay}">
+                    </Switch>
+                </StackLayout>
+                <Label
+                    HorizontalOptions="Center"
+                    TextColor="Black"
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    Text="Forgot you password?">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <ActivityIndicator
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}"
+                    VerticalOptions="Center"
+                    Color="Navy">
+                </ActivityIndicator>
+                <StackLayout
+                    Orientation="Vertical"
+                    Margin="50,10">
+                    <Button
+                        BorderRadius="25"
+                        BackgroundColor="Blue"
+                        Command="{Binding LoginCommand}"            
+                        FontSize="Large"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Login"
+                        TextColor="Black"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="Center">
+                    </Button>
+                    <Button
+                        BackgroundColor="OrangeRed"
+                        BorderRadius="25"
+                        Command="{Binding RegiterNewUserCommand}"            
+                        FontSize="Large"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
+                        HorizontalOptions="FillAndExpand"            
+                        Text="Regiter New User "
+                        TextColor="Black"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="Center">
+                    </Button>
+                    <Button
+                        BackgroundColor="DarkOrange"
+                        BorderRadius="25"
+                        Command="{Binding LogiWithFacebookCommand}"            
+                        FontSize="Large"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
+                        HorizontalOptions="FillAndExpand"     
+                        Text="Login With Facebook"
+                        TextColor="Black"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="Center">
+                    </Button>
+                </StackLayout>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

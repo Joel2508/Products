@@ -8,11 +8,9 @@
         <!-- Application resource dictionary -->
 
         <ResourceDictionary>
-
             <!--Locator-->
             <infra:IntanceLocator x:Key="Locator"/>
-            <!--Color-->           
-            
+            <!--Color-->                       
         </ResourceDictionary>
 
     </Application.Resources>
