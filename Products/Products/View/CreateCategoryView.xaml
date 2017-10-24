@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Products.View.CreateCategoryView"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             BackgroundColor="White"
+             Title="New Category">
+    <ContentPage.Content>
+        <StackLayout                        
+            BindingContext="{Binding CreateCategory}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Column="0"
+                    FontSize="Medium"
+                    FontAttributes="Bold"
+                    Text="Category:"
+                    TextColor="Black"
+                    VerticalOptions="Center">
+                </Label>
+                <Entry
+                    Grid.Column="1"
+                    Placeholder="Enter category description..."
+                    VerticalOptions="Center"                
+                    Text="{Binding Description, Mode=TwoWay}"
+                    TextColor="Black">
+                </Entry>
+            </Grid>
+            <ActivityIndicator
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}"
+                    Color="Navy">
+            </ActivityIndicator>
+            <Button
+                    Command="{Binding SavelCommand}"
+                    BackgroundColor="Black"
+                    BorderRadius="23"
+                    HeightRequest="46"                    
+                    FontAttributes="Bold"                    
+                    Margin="50,0"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                    Text="Accept"
+                    TextColor="White"                    
+                    VerticalOptions="Center">
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

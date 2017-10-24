@@ -1,18 +1,10 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Plugin.Connectivity;
-using Products.Service;
-using Products.View;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.Forms;
-
-namespace Products.ViewModel
+﻿namespace Products.ViewModel
 {
+    using GalaSoft.MvvmLight.Command;
+    using Products.Service;
+    using System.ComponentModel;
+    using System.Windows.Input;
+
     public class LoginViewModel : INotifyPropertyChanged
     {
         #region Events
@@ -22,11 +14,12 @@ namespace Products.ViewModel
         #region Service
         private DialogService dialogService; 
         private ApiService apiService;
+        private NavigationService navigationService;
         #endregion
 
         #region Attribute
-        private string email;
-        private string password;
+        string email;
+        string password;
         private bool isToggled;
         private bool isRunning;
         private bool isEnabled;
@@ -44,7 +37,7 @@ namespace Products.ViewModel
                 if (email != value)
                 {
                     email = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(email)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Email)));
                 }
             }
         }
@@ -60,7 +53,7 @@ namespace Products.ViewModel
                 if (password != value)
                 {
                     password = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(password)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
                 }
             }
         }
@@ -118,8 +111,9 @@ namespace Products.ViewModel
         {
             IsEnabled = true;
             IsToggled = true;
-            dialogService = new DialogService();
             apiService = new ApiService();
+            dialogService = new DialogService();
+            navigationService = new NavigationService();
         }
         #endregion
 
@@ -140,8 +134,8 @@ namespace Products.ViewModel
                 return;
             }
 
-            IsRunning = true;
             IsEnabled = false;
+            IsRunning = true;
 
             var connection = await apiService.CheckConnection();
 
@@ -156,32 +150,32 @@ namespace Products.ViewModel
                 Email, Password);
             if (response == null)
             {
-                IsRunning = false;
                 IsEnabled = true;
+                IsRunning = false;
                 await dialogService.ShowMessage("Error", "Not service the internet");
+                Email = null;
                 Password = null;
                 return;
             }
             if (string.IsNullOrEmpty(response.AccessToken))
             {
-                IsRunning = false;
                 IsEnabled = true;
+                IsRunning = false;
                 await dialogService.ShowMessage("Error", response.ErrorDescription);
                 Password = null;
                 return;
             }
 
+
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = response;
-            mainViewModel.Categories = new CategoryViewModel();
-
-            await  Application.Current.MainPage.Navigation.PushAsync(new CategoryView());            
-
+            mainViewModel.Category = new CategoryViewModel();
+            await navigationService.Navigate("CategoryView");
             Email = null;
             Password = null;
 
-            IsRunning = false;
             IsEnabled = true;
+            IsRunning = false;
         }
         #endregion
     }

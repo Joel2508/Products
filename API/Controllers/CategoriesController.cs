@@ -1,60 +1,56 @@
-﻿using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Backend.Context;
-using Backend.Model;
-using System.Collections.Generic;
-using API.Response;
-using System;
+﻿namespace API.Controllers
+{
+    using Backend.Context;
+    using Backend.Model;
+    using Response;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.Description;
 
-namespace API.Controllers
-{    
     [Authorize]
     public class CategoriesController : ApiController
     {
-        ContextBackend db;
+        private ContextBackend db = new ContextBackend();
 
-        public CategoriesController()
-        {
-            db = new ContextBackend();
-        }
         // GET: api/Categories
         public async Task<IHttpActionResult> GetCategories()
         {
             var categories = await db.Categories.ToListAsync();
             var categoriesResponse = new List<CategoryResponse>();
 
-            foreach (var category in categories)
+            foreach (var category in categories.OrderBy(c => c.Description))
             {
                 var productResponse = new List<ProductResponse>();
 
-                foreach (var item in category.Products)
+                foreach (var product in category.Products.OrderBy(p => p.Description))
                 {
                     productResponse.Add(new ProductResponse
                     {
-                        Description = item.Description,
-                        Image = item.Image,
-                        IsActive = item.IsActive,
-                        LastPurchase = item.LastPurchase,
-                        Price = item.Price,
-                        ProductId = item.ProductId,
-                        Remarks = item.Remarks,
-                        Sctock = item.Sctock,
-                    });
-
-                    categoriesResponse.Add(new CategoryResponse
-                    {
-                        CategoryId = item.CategoryId,
-                        Description = item.Description,
-                        Products = productResponse,
+                        Description = product.Description,
+                        Image = product.Image,
+                        IsActive = product.IsActive,
+                        LastPurchase = product.LastPurchase,
+                        Price = product.Price,
+                        ProductId = product.ProductId,
+                        Remarks = product.Remarks,
+                        Sctock = product.Sctock,
                     });
                 }
+
+                categoriesResponse.Add(new CategoryResponse
+                {
+                    CategoryId = category.CategoryId,
+                    Description = category.Description,
+                    Products = productResponse,
+                });
             }
-            return Ok(categoriesResponse.OrderBy(c => c.Description));
+            return Ok(categoriesResponse);
         }
 
 
@@ -116,7 +112,24 @@ namespace API.Controllers
             }
 
             db.Categories.Add(category);
-            await db.SaveChangesAsync();
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null 
+                    && ex.InnerException.InnerException != null
+                    && ex.InnerException.InnerException.Message.Contains("Index"))
+                {
+                    return BadRequest("There are a record with the same description.");
+                }
+                else
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            
 
             return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
         }

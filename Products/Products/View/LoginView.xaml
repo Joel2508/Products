@@ -20,48 +20,46 @@
                 Orientation="Vertical">
                 <Grid Padding="8">
                     <Grid Grid.Row="0"
-                          Margin="50,10">
+                          HorizontalOptions="FillAndExpand"
+                          Margin="30,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label                
                             Grid.Column="0"
                             FontAttributes="Bold"
-                            FontSize="Small"
+                            FontSize="Large"
                             Text="Email:"
                             TextColor="Black">
                         </Label>
                         <Entry                  
                             Grid.Column="1"          
-                            BackgroundColor="DodgerBlue"
                             Text="{Binding Email, Mode=TwoWay}"                                    
                             HorizontalOptions="Start"                        
-                            VerticalOptions="Center"
                             Keyboard="Email"
                             Placeholder="Enter you email...."
                             TextColor="Black">
                         </Entry>
                     </Grid>
                     <Grid Grid.Row="1"
-                          Margin="50,10">
+                          HorizontalOptions="FillAndExpand"
+                          Margin="30,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions >
                         <Label                
                             Grid.Column="0"
                             FontAttributes="Bold"
-                            FontSize="Small"
+                            FontSize="Large"
                             Text="Password:"
                             TextColor="Black">
                         </Label>
                         <Entry                  
                             Grid.Column="1"          
-                            BackgroundColor="DodgerBlue"                    
                             Text="{Binding Password, Mode=TwoWay}"                                    
                             HorizontalOptions="Start"                        
-                            VerticalOptions="Center"
                             IsPassword="True"                            
                             Placeholder="Enter you password...."
                             TextColor="Black">
@@ -84,23 +82,23 @@
                     </Switch>
                 </StackLayout>
                 <Label
-                    HorizontalOptions="Center"
-                    TextColor="Black"
-                    FontAttributes="Bold"
-                    FontSize="Large"
-                    Text="Forgot you password?">
+                        HorizontalOptions="Center"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        Text="Forgot you password?">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
                     </Label.GestureRecognizers>
                 </Label>
                 <ActivityIndicator
-                    IsRunning="{Binding IsRunning, Mode=TwoWay}"
-                    VerticalOptions="Center"
-                    Color="Navy">
+                        IsRunning="{Binding IsRunning, Mode=TwoWay}"
+                        VerticalOptions="Center"
+                        Color="Navy">
                 </ActivityIndicator>
                 <StackLayout
-                    Orientation="Vertical"
-                    Margin="50,10">
+                        Orientation="Vertical"
+                        Margin="50,10">
                     <Button
                         BorderRadius="25"
                         BackgroundColor="Blue"

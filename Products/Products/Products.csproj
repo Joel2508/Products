@@ -46,15 +46,23 @@
     <Compile Include="Response\TokenResponse.cs" />
     <Compile Include="Service\ApiService.cs" />
     <Compile Include="Service\DialogService.cs" />
-    <Compile Include="ViewModel\CategoryItemViewModel.cs" />
+    <Compile Include="Service\NavigationService.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
+    <Compile Include="ViewModel\CreateCategoryViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="View\CategoryView.xaml.cs">
       <DependentUpon>CategoryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CreateCategoryView.xaml.cs">
+      <DependentUpon>CreateCategoryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProductView.xaml.cs">
+      <DependentUpon>ProductView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +128,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\CategoryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\ProductView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\CreateCategoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -190,21 +190,19 @@ namespace Products.Service
                 var requet = JsonConvert.SerializeObject(model);
                 var content = new StringContent(requet, Encoding.UTF8, "application/json");
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accentToken);
                 client.BaseAddress = new Uri(urlBase);
-                var url = string.Format("{0}{1}", servicePrefix, controller);
+                var url = string.Format("{0}/{1}", servicePrefix, controller);
                 var response = await client.PostAsync(url,content);
+                var result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return new Responses
-                    {
-                        IsSuccess = false,
-                        Message = response.StatusCode.ToString(),
-                    };
+                    var error = JsonConvert.DeserializeObject<Responses>(result);
+                    error.IsSuccess=false;
+                    return error;
                 }
 
-                var result = await response.Content.ReadAsStringAsync();
                 var models = JsonConvert.DeserializeObject<T>(result);
 
                 return new Responses

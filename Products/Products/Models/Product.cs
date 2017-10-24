@@ -11,5 +11,13 @@
         public double Sctock { get; set; }
         public string Remarks { get; set; }
         public string Image { get; set; }
+
+        public string FullImage
+        {
+            get
+            {
+                return string.Format("http://products.somee.com/{0}", Image.Substring(1));
+            }
+        }
     }
 }
