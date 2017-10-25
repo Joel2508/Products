@@ -1,15 +1,10 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Products.Response;
-using Products.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace Products.ViewModel
+﻿namespace Products.ViewModel
 {
+    using GalaSoft.MvvmLight.Command;
+    using Response;
+    using Service;
+    using System.Windows.Input;
+
     public class MainViewModel
     {
         #region Service
@@ -22,6 +17,7 @@ namespace Products.ViewModel
         public TokenResponse Token { get; set; }
         public ProductViewModel Product { get; set; }
         public CreateCategoryViewModel CreateCategory { get; set; }
+        public NewProductViewModel NewProduct { get; set; }
         #endregion
 
         public MainViewModel()
@@ -53,6 +49,13 @@ namespace Products.ViewModel
             await navigationService.Navigate("CreateCategoryView");
         }
         #endregion
-        
+
+        public ICommand NewProductCommand { get { return new RelayCommand(AddNewProduct); } }
+
+        private async void AddNewProduct()
+        {
+            NewProduct = new NewProductViewModel();
+            await navigationService.Navigate("NewProductView");
+        }
     }
 }

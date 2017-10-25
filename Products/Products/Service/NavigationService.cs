@@ -21,6 +21,9 @@ namespace Products.Service
                 case "CreateCategoryView":
                     await Application.Current.MainPage.Navigation.PushAsync(new CreateCategoryView());
                     break;
+                case "NewProductView":
+                    await Application.Current.MainPage.Navigation.PushAsync(new NewProductView());
+                    break;
             }
         }
 

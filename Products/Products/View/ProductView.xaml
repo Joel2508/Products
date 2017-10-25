@@ -2,8 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Products.View.ProductView"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}">
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="List the Product">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Icon="ic_add_circle"
+            Command="{Binding NewProductCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
     <StackLayout
         Orientation="Horizontal"
         BindingContext="{Binding Product}">
