@@ -274,22 +274,20 @@ namespace Products.Service
                 client.BaseAddress = new Uri(urlBase);
                 var url = string.Format("{0}{1}/{2}", servicePrefix, controller, model.GetHashCode());
                 var response = await client.PutAsync(url, content);
+                var result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return new Responses
-                    {
-                        IsSuccess = false,
-                        Message = response.StatusCode.ToString(),
-                    };
+                    var error = JsonConvert.DeserializeObject<Responses>(result);
+                    error.IsSuccess = false;
+                    return error;
                 }
-                var result = await response.Content.ReadAsStringAsync();
+                
                 var newRecords = JsonConvert.DeserializeObject<T>(result);
 
                 return new Responses
                 {
-                    IsSuccess=true,
-                    Message="Record update OK",
+                    IsSuccess=true,                    
                     Result=newRecords,                    
                 };
             }

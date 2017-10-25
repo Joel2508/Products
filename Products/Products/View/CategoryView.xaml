@@ -14,11 +14,25 @@
         Orientation="Horizontal"
         Padding="5">
         <ListView
-                ItemsSource="{Binding Categories}"
-                HasUnevenRows="True">
+            HasUnevenRows="True"
+            IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"            
+            IsPullToRefreshEnabled="True"
+            RefreshCommand="{Binding RefreshCommand}"            
+            ItemsSource="{Binding Categories}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem
+                                Command="{Binding EditCommad}"
+                                Text="Edit">
+                            </MenuItem>
+                            <MenuItem
+                                Command="{Binding DeleteCommand}"
+                                IsDestructive="True"
+                                Text="Delete">
+                            </MenuItem>
+                        </ViewCell.ContextActions>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>

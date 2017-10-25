@@ -18,6 +18,7 @@
         public ProductViewModel Product { get; set; }
         public CreateCategoryViewModel CreateCategory { get; set; }
         public NewProductViewModel NewProduct { get; set; }
+        public EditCategoryViewModel EditCategory { get; set; }
         #endregion
 
         public MainViewModel()

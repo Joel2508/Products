@@ -7,6 +7,7 @@
     using View;
     using ViewModel;
     using Xamarin.Forms;
+    using System;
 
     public class Category
     {
@@ -32,9 +33,18 @@
 
         private async void SelectCategory()
         {
-            await navigationService.Navigate("ProductView");
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Product = new ProductViewModel(Products);
+            await navigationService.Navigate("ProductView");
+        }
+
+        public ICommand EditCommad { get { return new RelayCommand(Edit); } }
+
+        private async void Edit()
+        {
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.EditCategory = new EditCategoryViewModel(this);
+            await navigationService.Navigate("EditCategoryView");
         }
         #endregion
     }

@@ -49,6 +49,7 @@
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\CreateCategoryViewModel.cs" />
+    <Compile Include="ViewModel\EditCategoryViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NewProductViewModel.cs" />
@@ -58,6 +59,9 @@
     </Compile>
     <Compile Include="View\CreateCategoryView.xaml.cs">
       <DependentUpon>CreateCategoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditCategoryView.xaml.cs">
+      <DependentUpon>EditCategoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -150,6 +154,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\NewProductView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\EditCategoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
