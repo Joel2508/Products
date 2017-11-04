@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Windows.Input;
     using System;
+    using Xamarin.Forms;
 
     public class CategoryViewModel : INotifyPropertyChanged
     {

@@ -21,12 +21,14 @@
         public EditCategoryViewModel EditCategory { get; set; }
         #endregion
 
+        #region Constructor
         public MainViewModel()
         {
             instance = this;
             Login = new LoginViewModel();
-            navigationService = new NavigationService(); 
+            navigationService = new NavigationService();
         }
+        #endregion
 
         #region Singleton
         private static MainViewModel instance;
@@ -49,7 +51,6 @@
             CreateCategory = new CreateCategoryViewModel();
             await navigationService.Navigate("CreateCategoryView");
         }
-        #endregion
 
         public ICommand NewProductCommand { get { return new RelayCommand(AddNewProduct); } }
 
@@ -58,5 +59,6 @@
             NewProduct = new NewProductViewModel();
             await navigationService.Navigate("NewProductView");
         }
+        #endregion
     }
 }

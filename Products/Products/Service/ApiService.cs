@@ -49,13 +49,14 @@ namespace Products.Service
             try
             {
                 var client = new HttpClient();
-                client.BaseAddress = new Uri(urlBase);
+                client.BaseAddress = new Uri(urlBase);                
                 var response = await client.PostAsync("Token",
                     new StringContent(string.Format(
                    "grant_type=password&username={0}&password={1}", useName, password),
                     Encoding.UTF8, "application/x-www-form-urlencoded"));
                 var resulJson = await response.Content.ReadAsStringAsync();
                 var resutl = JsonConvert.DeserializeObject<TokenResponse>(resulJson);
+
                 return resutl;
             }
             catch
@@ -182,6 +183,7 @@ namespace Products.Service
                 };
             }
         }
+
         public async Task<Responses> Post<T>(string urlBase, string servicePrefix, string controller,
             string tokenType, string accentToken, T model)
         {

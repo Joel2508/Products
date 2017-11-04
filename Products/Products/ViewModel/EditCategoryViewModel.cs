@@ -62,7 +62,6 @@
 
         #endregion
 
-
         #region Constructor
         public EditCategoryViewModel(Category category)
         {

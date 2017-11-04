@@ -13,6 +13,7 @@
     using System.Web.Http;
     using System.Web.Http.Description;
 
+ 
     [Authorize]
     public class CategoriesController : ApiController
     {
@@ -22,6 +23,7 @@
         public async Task<IHttpActionResult> GetCategories()
         {
             var categories = await db.Categories.ToListAsync();
+
             var categoriesResponse = new List<CategoryResponse>();
 
             foreach (var category in categories.OrderBy(c => c.Description))
@@ -42,7 +44,6 @@
                         Sctock = product.Sctock,
                     });
                 }
-
                 categoriesResponse.Add(new CategoryResponse
                 {
                     CategoryId = category.CategoryId,
