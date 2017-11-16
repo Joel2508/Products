@@ -105,10 +105,12 @@
                 await dialogService.ShowMessage("Error", connection.Message);
                 return;
             }
+
             var mainViewModel = MainViewModel.GetInstance();            
             var response = await apiService.GetList<Category>("http://products.somee.com", "/api", "/Categories",
                 mainViewModel.Token.TokenType,
                 mainViewModel.Token.AccessToken);
+
             if (!response.IsSuccess)
             {
                 await dialogService.ShowMessage("Error", response.Message);

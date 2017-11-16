@@ -148,6 +148,7 @@
             }
             var response = await apiService.GetToken("http://products.somee.com", 
                 Email, Password);
+
             if (response == null)
             {
                 IsEnabled = true;
